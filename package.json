@@ -1,0 +1,13 @@
+{
+    "name": "solvent",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev": "node app.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "node-mysql-helper": "^0.6.7"
+    }
+}
