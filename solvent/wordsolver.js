@@ -44,7 +44,6 @@ function getPermutations(array, size) {
 }
 
 module.exports = async (randomLetter) => {
-    console.log(randomLetter);
     for (let i = randomLetter.length; i > 1; i--) {
         let permutationList = await getPermutations(randomLetter, i);
         let words = JSON.stringify(await searchQuery(permutationList));
