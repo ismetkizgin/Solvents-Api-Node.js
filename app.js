@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(require('./router/wordsolver'));
+app.use(require('./router/countdownsolver'));
 
 app.get("/", (req, res, next) => {
     res.send("OK!");
