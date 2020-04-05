@@ -1,14 +1,12 @@
 const Mysql = require('node-mysql-helper');
 
-const config = {
-    host: "localhost",
-    user: "root",
-    password: "ismet",
-    database: "turkish_words",
+Mysql.connect({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE,
     socketPath: false,
     connectionLimit: 5
-};
-
-Mysql.connect(config);
+});
 
 module.exports = Mysql;
