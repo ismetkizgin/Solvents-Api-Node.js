@@ -1,6 +1,6 @@
 const express = require('express');
-//const CompanyControl = require('./CompanyExpress');
 var bodyParser = require('body-parser');
+
 
 const PORT = 3000 || process.env.PORT;
 const app = express();
@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//app.use(CompanyControl);
+app.use(require('./router/wordsolver'));
 
 app.get("/", (req, res, next) => {
     res.send("OK!");
