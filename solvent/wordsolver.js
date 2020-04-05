@@ -50,7 +50,7 @@ module.exports = async (randomLetter) => {
         words = JSON.parse(words);
         if (words.length > 0) {
             return new Promise(resolve => {
-                resolve(words[0].kelime);
+                resolve({word: words[0].kelime});
             });
         }
     }

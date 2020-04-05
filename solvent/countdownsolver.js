@@ -164,7 +164,7 @@ function stringify_result(serialised, target) {
     var result = serialised[serialised.length - 1][0];
     output += '(Başarım Puanı: ' + (9 - Math.abs(result - target)) + ')';
 
-    return output;
+    return { result: output };
 }
 
 function _solve_numbers(numbers, target, trickshot) {
