@@ -5,12 +5,11 @@ function searchQuery(randomLetter) {
         let likeQuery = "";
         for (let j = 0; j < randomLetter.length; j++) {
             for (let i = 0; i < randomLetter[j].length; i++) {
-                likeQuery += "kelime like " + "'%" + randomLetter[j][i] + "%' ";
+                likeQuery += "word like " + "'%" + randomLetter[j][i] + "%' ";
                 likeQuery += (randomLetter[j].length - 1) != i ? "and " : "";
             }
-            likeQuery += "and length(kelime) = " + (randomLetter[j].length + 1);
+            likeQuery += "and length(word) = " + (randomLetter[j].length + 1);
             let words = wordFind(likeQuery);
-
             if (words != null)
                 resolve(words);
         }
@@ -19,7 +18,7 @@ function searchQuery(randomLetter) {
 
 function wordFind(likeQuery) {
     return new Promise(resolve => {
-        resolve(wordTransactions.Query("Select * from words where " + likeQuery));
+        resolve(wordTransactions.Query("SELECT * FROM words WHERE " + likeQuery));
     });
 }
 
@@ -50,7 +49,7 @@ module.exports = async (randomLetter) => {
         words = JSON.parse(words);
         if (words.length > 0) {
             return new Promise(resolve => {
-                resolve({word: words[0].kelime});
+                resolve({word: words[0].word});
             });
         }
     }
