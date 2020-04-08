@@ -1,6 +1,6 @@
-var bestvalsums;
+var bestvalue;
 
-var OPS = {
+var operations = {
     "+": function (n1, n2) { if (n1 < 0 || n2 < 0) return false; return n1 + n2; },
     "-": function (n1, n2) { if (n2 >= n1) return false; return n1 - n2; },
     "_": function (n2, n1) { if (n2 >= n1) return false; return n1 - n2; },
@@ -9,7 +9,7 @@ var OPS = {
     "?": function (n2, n1) { if (n2 == 0 || n1 % n2 != 0) return false; return n1 / n2; },
 };
 
-var OPCOST = {
+var operationsCOST = {
     "+": 1,
     "-": 1.05,
     "_": 1.05,
@@ -18,7 +18,7 @@ var OPCOST = {
     "?": 1.3,
 };
 
-function _recurse_solve_numbers(numbers, was_generated, target, levels = numbers.length, valsums = 0, trickshot = false, searchedi = 0) {
+function countdownSolver(numbers, was_generated, target, levels = numbers.length, valsums = 0, trickshot = false, searchedi = 0) {
     levels--;
 
     for (var i = 0; i < numbers.length - 1; i++) {
@@ -38,8 +38,8 @@ function _recurse_solve_numbers(numbers, was_generated, target, levels = numbers
             if (i < searchedi && !was_generated[i] && !was_generated[j])
                 continue;
 
-            for (var o in OPS) {
-                var r = OPS[o](ni[0], nj[0]);
+            for (var o in operations) {
+                var r = operations[o](ni[0], nj[0]);
                 if (r === false)
                     continue;
 
@@ -48,22 +48,22 @@ function _recurse_solve_numbers(numbers, was_generated, target, levels = numbers
                     op_cost /= 10;
                 if ((ni[0] == 10 || nj[0] == 10) && o == '*')
                     op_cost = 1;
-                op_cost *= OPCOST[o];
+                op_cost *= operationsCOST[o];
 
                 var newvalsums = valsums + op_cost;
 
                 if ((Math.abs(r - target) < Math.abs(bestresult[0] - target)) ||
-                    (Math.abs(r - target) == Math.abs(bestresult[0] - target) && (trickshot || newvalsums < bestvalsums))) {
+                    (Math.abs(r - target) == Math.abs(bestresult[0] - target) && (trickshot || newvalsums < bestvalue))) {
                     bestresult = [r, o, ni, nj];
-                    bestvalsums = newvalsums;
+                    bestvalue = newvalsums;
                 }
 
                 numbers[j] = [r, o, ni, nj];
                 var old_was_gen = was_generated[j];
                 was_generated[j] = true;
 
-                if (levels > 0 && (trickshot || bestresult[0] != target || newvalsums < bestvalsums))
-                    _recurse_solve_numbers(numbers, was_generated, target, levels, newvalsums, trickshot, i + 1);
+                if (levels > 0 && (trickshot || bestresult[0] != target || newvalsums < bestvalue))
+                 countdownSolver(numbers, was_generated, target, levels, newvalsums, trickshot, i + 1);
 
                 was_generated[j] = old_was_gen;
                 numbers[j] = nj;
@@ -74,7 +74,7 @@ function _recurse_solve_numbers(numbers, was_generated, target, levels = numbers
     }
 }
 
-function tidyup_result(result) {
+function tidyupResult(result) {
     var mapping = {
         "?": "/",
         "_": "-"
@@ -91,7 +91,7 @@ function tidyup_result(result) {
     for (var i = 2; i < result.length; i++) {
         var child = result[i];
 
-        child = tidyup_result(child);
+        child = tidyupResult(child);
 
         if (child[1] == result[1] && swappable[result[1]]) {
             result.splice(i--, 1);
@@ -115,28 +115,28 @@ function tidyup_result(result) {
     return result;
 }
 
-function fullsize(array) {
+function fullSize(array) {
     if (array.constructor != Array)
         return 0;
 
     var l = 0;
 
     for (var i = 0; i < array.length; i++)
-        l += fullsize(array[i]);
+        l += fullSize(array[i]);
 
     return l + array.length;
 }
 
-function serialise_result(result) {
+function serialiseResult(result) {
     var childparts = [];
 
     for (var i = 2; i < result.length; i++) {
         var child = result[i];
         if (child.length >= 4)
-            childparts.push(serialise_result(child));
+            childparts.push(serialiseResult(child));
     }
 
-    childparts = childparts.sort(function (a, b) { return fullsize(b) - fullsize(a); });
+    childparts = childparts.sort(function (a, b) { return fullSize(b) - fullSize(a); });
 
     var parts = [];
     for (var i = 0; i < childparts.length; i++) {
@@ -149,7 +149,7 @@ function serialise_result(result) {
     return parts.concat([thispart]);
 }
 
-function stringify_result(serialised, target) {
+function stringifyResult(serialised, target) {
     var output = '';
 
     serialised = serialised.slice(0);
@@ -167,24 +167,24 @@ function stringify_result(serialised, target) {
     return { result: output };
 }
 
-function _solve_numbers(numbers, target, trickshot) {
+function solveNumbers(numbers, target, trickshot) {
     numbers = numbers.map(function (x) { return [x, false] });
 
     var was_generated = [];
     for (var i = 0; i < numbers.length; i++)
         was_generated.push(false);
 
-    _recurse_solve_numbers(numbers, was_generated, target);
+ countdownSolver(numbers, was_generated, target);
 
     return bestresult;
 }
 
-module.exports = function solve_numbers(numbers, target, trickshot = false) {
+module.exports = (numbers, target, trickshot = false) => {
     numberMax = numbers[numbers.length - 1];
     bestresult = [numberMax, numberMax];
 
     if (numberMax == target)
         return target + '=' + target;
 
-    return stringify_result(serialise_result(tidyup_result(_solve_numbers(numbers, target, trickshot))), target);
+    return stringifyResult(serialiseResult(tidyupResult(solveNumbers(numbers, target, trickshot))), target);
 }
