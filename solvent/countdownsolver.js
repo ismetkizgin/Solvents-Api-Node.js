@@ -180,6 +180,13 @@ function solveNumbers(numbers, target, trickshot) {
 }
 
 module.exports = (numbers, target, trickshot = false) => {
+    let mulMax = 1;
+    for(let i=0; i<numbers.length; i++)
+        mulMax *= numbers[i];
+
+    if(mulMax < target)
+        return {result: "İşlemin sonucu sağlanmamaktadır."};
+    
     numberMax = numbers[numbers.length - 1];
     bestresult = [numberMax, numberMax];
 
