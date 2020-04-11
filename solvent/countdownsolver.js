@@ -185,7 +185,7 @@ module.exports = (numbers, target, trickshot = false) => {
         mulMax *= numbers[i];
 
     if(mulMax < target)
-        return {result: "İşlemin sonucu sağlanmamaktadır."};
+        return {result: "İşlemin sonucu sağlanmamaktadır.", score: 0};
     
     numberMax = numbers[numbers.length - 1];
     bestresult = [numberMax, numberMax];
