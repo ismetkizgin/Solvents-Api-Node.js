@@ -42,18 +42,47 @@ function getPermutations(array, size) {
     });
 }
 
+function scoreCalculation(wordLength) {
+    return new Promise(resolve => {
+        let score = 0;
+        if (wordLength <= 5) {
+            score = wordLength;
+        }
+        else {
+            switch (wordLength) {
+                case 6:
+                    score = 7;
+                    break;
+
+                case 7:
+                    score = 9;
+                    break;
+                case 8:
+                    score = 11;
+                    break;
+
+                case 9:
+                    score = 15;
+                    break
+            }
+        }
+        resolve(score);
+    });
+}
+
 module.exports = async (randomLetter) => {
     for (let i = randomLetter.length; i > 1; i--) {
         let permutationList = await getPermutations(randomLetter, i);
         let words = JSON.stringify(await searchQuery(permutationList));
         words = JSON.parse(words);
         if (words.length > 0) {
+            let score = await scoreCalculation(words[0].word.length); 
             return new Promise(resolve => {
-                resolve({word: words[0].word});
+                resolve({ word: words[0].word, score});
             });
         }
     }
     return new Promise(resolve => {
-        resolve({word: 'Kelime Bulunamadı'});
+        resolve({ word: 'Kelime Bulunamadı', score: 0 });
     });
 }
