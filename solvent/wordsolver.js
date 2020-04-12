@@ -1,5 +1,6 @@
 const wordTransactions = require('../database/query/wordTransactions');
 
+//Creating the condition
 function searchQuery(randomLetter) {
     return new Promise(resolve => {
         let likeQuery = "";
@@ -16,12 +17,14 @@ function searchQuery(randomLetter) {
     });
 }
 
+//Find word in database
 function wordFind(likeQuery) {
     return new Promise(resolve => {
         resolve(wordTransactions.Query("SELECT * FROM words WHERE " + likeQuery));
     });
 }
 
+//Permutation possibility list
 function getPermutations(array, size) {
     return new Promise(resolve => {
         function p(t, i) {
@@ -42,6 +45,7 @@ function getPermutations(array, size) {
     });
 }
 
+//Score calculation 
 function scoreCalculation(wordLength) {
     return new Promise(resolve => {
         let score = 0;
@@ -70,13 +74,18 @@ function scoreCalculation(wordLength) {
     });
 }
 
+//Main function
 module.exports = async (randomLetter) => {
     for (let i = randomLetter.length; i > 1; i--) {
+        //Permutation possibility list
         let permutationList = await getPermutations(randomLetter, i);
+        //Creating the condition and find word in database
         let words = JSON.stringify(await searchQuery(permutationList));
         words = JSON.parse(words);
         if (words.length > 0) {
-            let score = await scoreCalculation(words[0].word.length); 
+            //Score calculation
+            let score = await scoreCalculation(words[0].word.length);
+            //return json format word
             return new Promise(resolve => {
                 resolve({ word: words[0].word, score});
             });

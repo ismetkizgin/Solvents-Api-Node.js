@@ -1,5 +1,6 @@
 let bestvalue;
 
+//Transactions
 let operations = {
     "+": function (n1, n2) { if (n1 < 0 || n2 < 0) return false; return n1 + n2; },
     "-": function (n1, n2) { if (n2 >= n1) return false; return n1 - n2; },
@@ -18,6 +19,7 @@ let operationsCOST = {
     "?": 1.3,
 };
 
+//Probability list calculation
 function countdownSolver(numbers, was_generated, target, levels = numbers.length, valsums = 0, trickshot = false, searchedi = 0) {
     levels--;
 
@@ -63,7 +65,7 @@ function countdownSolver(numbers, was_generated, target, levels = numbers.length
                 was_generated[j] = true;
 
                 if (levels > 0 && (trickshot || bestresult[0] != target || newvalsums < bestvalue))
-                 countdownSolver(numbers, was_generated, target, levels, newvalsums, trickshot, i + 1);
+                    countdownSolver(numbers, was_generated, target, levels, newvalsums, trickshot, i + 1);
 
                 was_generated[j] = old_was_gen;
                 numbers[j] = nj;
@@ -74,6 +76,7 @@ function countdownSolver(numbers, was_generated, target, levels = numbers.length
     }
 }
 
+//result calculation function
 function tidyupResult(result) {
     let mapping = {
         "?": "/",
@@ -115,6 +118,7 @@ function tidyupResult(result) {
     return result;
 }
 
+//Array transaction
 function fullSize(array) {
     if (array.constructor != Array)
         return 0;
@@ -127,6 +131,7 @@ function fullSize(array) {
     return l + array.length;
 }
 
+//Fast result function
 function serialiseResult(result) {
     let childparts = [];
 
@@ -149,6 +154,7 @@ function serialiseResult(result) {
     return parts.concat([thispart]);
 }
 
+//Creating result output
 function stringifyResult(serialised, target) {
     let output = '';
 
@@ -162,11 +168,13 @@ function stringifyResult(serialised, target) {
     }
 
     let result = serialised[serialised.length - 1][0];
+    //Score calculation 
     let score = (9 - Math.abs(result - target));
 
     return { result: output, score: score };
 }
 
+//numbers array revised function
 function solveNumbers(numbers, target, trickshot) {
     numbers = numbers.map(function (x) { return [x, false] });
 
@@ -174,19 +182,21 @@ function solveNumbers(numbers, target, trickshot) {
     for (let i = 0; i < numbers.length; i++)
         was_generated.push(false);
 
- countdownSolver(numbers, was_generated, target);
+    countdownSolver(numbers, was_generated, target);
 
     return bestresult;
 }
 
+//Main function
 module.exports = (numbers, target, trickshot = false) => {
+    //All numbers multiplication calculation   
     let mulMax = 1;
-    for(let i=0; i<numbers.length; i++)
+    for (let i = 0; i < numbers.length; i++)
         mulMax *= numbers[i];
 
-    if(mulMax < target)
-        return {result: "İşlemin sonucu sağlanmamaktadır.", score: 0};
-    
+    if (mulMax < target)
+        return { result: "İşlemin sonucu sağlanmamaktadır.", score: 0 };
+
     numberMax = numbers[numbers.length - 1];
     bestresult = [numberMax, numberMax];
 
