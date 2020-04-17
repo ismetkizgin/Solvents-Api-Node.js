@@ -1,5 +1,14 @@
 # Solvents API Project
 
+#### Project Setup
+```
+    npm install
+```
+#### Compiles and hot-reloads for development
+```
+    npm run dev
+```
+
 ## http://localhost:5000/wordsolver/[m,e,k,t,a,p,t,s] -> GET
 
 RES
