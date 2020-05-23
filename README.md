@@ -9,13 +9,13 @@
     npm run dev
 ```
 
-## http://localhost:5000/wordsolver/[m,e,k,t,a,p,t,s] -> GET
+## http://localhost:5000/wordsolver/[m,e,k,t,u,a,g,y] -> GET
 
 RES
 ```json
 {
-    "word": "HAPSETMEK",
-    "score": 15
+    "word": "MUKTEZA",
+    "score": 9
 }
 ```
 
