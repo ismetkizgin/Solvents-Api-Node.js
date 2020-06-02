@@ -1,6 +1,6 @@
 # Solvents API Project
 
-#### Project Setup
+#### Installation Instructions
 ```
     npm install
 ```
