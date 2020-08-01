@@ -1,0 +1,31 @@
+version: "3"
+services:
+  serve:
+    container_name: solvents-api
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    expose:
+      - 5000
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      API_KEY: 3a4a1f3ec062b8726dcb1472af6f1f8621e8247f0ec4ce49943c1fbdf45fc6e56fdc492c54fef7ff6d35a38d87ddd43351c5a6619e0371425b6f5e53ce24516c
+      DB_HOST: database
+      DB_USER: root
+      DB_PASS: root
+      DB_DATABASE: solvent
+    links:
+      - database
+  database:
+    container_name: solvents-db
+    image: mariadb:10.3
+    ports:
+      - 3305:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: solvent
+      MYSQL_USER: root@localhost
+      MYSQL_PASSWORD: root
