@@ -1,9 +1,9 @@
-const mysqlDataContext = require('../dataContext/mysqlDataContext')
+const mysqlDataContext = require('../dataContext/mysqlDataContext');
 
 class QueryTransaction {
     constructor() { }
 
-    queryAsync() {
+    queryAsync(query) {
         return new Promise(resolve => {
             mysqlDataContext.query(query, (error, result) => {
                 if (!error) {
