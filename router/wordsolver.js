@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express();
-const wordSolver = require('../solvent/wordsolver');
+const { wordSolver } = require('../solvent');
 
 function getTrim(letter){
     return letter.trim();
