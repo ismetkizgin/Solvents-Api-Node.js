@@ -17,10 +17,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/hightlightjs-dark.css">
+    <link rel="stylesheet" href="assets/css/hightlightjs-dark.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,500|Source+Code+Pro:300" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css" media="all">
+    <link rel="stylesheet" href="assets/css/style.css" media="all">
     <script>hljs.initHighlightingOnLoad(); var path = window.location;</script>
 </head>
 
@@ -28,7 +28,7 @@
     <div class="left-menu">
         <div class="content-logo">
             <img alt="platform by Emily van den Heever from the Noun Project"
-                title="platform by Emily van den Heever from the Noun Project" src="images/logo.png" height="32" />
+                title="platform by Emily van den Heever from the Noun Project" src="assets/images/logo.png" height="32" />
             <span>API Documentation</span>
         </div>
         <div class="content-menu">
@@ -83,14 +83,18 @@ $ npm build
 
             <div class="overflow-hidden content-section" id="content-get-characters">
                 <h2 id="get-countdown">Countdown Solver</h2>
-                <pre><code class="bash">
+                <pre><code class="json">
 # Request Example
-GET <script>document.write(path)</script>countdownsolver/[2,4,5,7,5,50]/425
+GET <script>document.write(path)</script>countdownsolver
+{
+    "numbers": "2,4,5,7,5,50",
+    "target": 425
+}
                 </code></pre>
                 <p>
                     For the countdown solver, you need to make a GET call to the URL below :<br>
                     <code
-                        class="higlighted"><script>document.write(path)</script>countdownsolver/[2,4,5,7,5,50]/425</code>
+                        class="higlighted"><script>document.write(path)</script>countdownsolver</code>
                 </p>
                 <br>
                 <pre><code class="json">
@@ -105,14 +109,17 @@ Result example:
 
             <div class="overflow-hidden content-section" id="content-get-characters">
                 <h2 id="get-word">Word Solver</h2>
-                <pre><code class="bash">
+                <pre><code class="json">
 # Request Example
-GET <script>document.write(path)</script>wordsolver/[m, e, k, t, u, a,g, y] 
+GET <script>document.write(path)</script>wordsolver
+{
+    "letters": "m, e, k, t, u, a,g, y"
+}
                 </code></pre>
                 <p>
                     For the word solver, you need to make a GET call to the URL below :<br>
                     <code
-                        class="higlighted"><script>document.write(path)</script>wordsolver/[m, e, k, t, u, a,g, y]</code>
+                        class="higlighted"><script>document.write(path)</script>wordsolver</code>
                 </p>
                 <br>
                 <pre><code class="json">
@@ -175,8 +182,8 @@ Result example:
         }
     </style>
     <!-- END Github Corner Ribbon - to remove -->
-    <script src="js/libs/jquery.js"></script>
-    <script src="js/script.js"></script>
+    <script src="assets/js/libs/jquery.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>

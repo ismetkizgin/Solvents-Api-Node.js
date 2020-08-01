@@ -22,7 +22,7 @@ function searchQuery(randomLetter) {
 //Find word in database
 function wordFind(likeQuery) {
     return new Promise(resolve => {
-        resolve(queryTransaction.queryAsync("SELECT * FROM words WHERE" + likeQuery));
+        resolve(queryTransaction.queryAsync("SELECT * FROM TBL_NAME WHERE" + likeQuery));
     });
 }
 
